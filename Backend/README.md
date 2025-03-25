@@ -41,3 +41,40 @@ Registers a new user. This endpoint creates a user account and returns an authen
     ```
 - **400 Bad Request:** Validation error; required fields are missing or invalid.
 - **500 Internal Server Error:** Server-side error occurred.
+
+## POST /login
+
+### Description
+Logs in an existing user and returns an authentication token along with user details.
+
+### Request Body
+- `email` (string, required): Must be a valid email.
+- `password` (string, required): User's password.
+
+**Example Request:**
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "secret123"
+}
+```
+
+### Response Status Codes
+- **200 OK:** Successful login.
+  - **Response Example:**
+    ```json
+    {
+      "token": "jwt_token_here",
+      "user": {
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Doe"
+        },
+        "email": "john.doe@example.com"
+        // ... other user data ...
+      }
+    }
+    ```
+- **400 Bad Request:** Validation error; required fields are missing or invalid.
+- **401 Unauthorized:** Invalid email or password.
+- **500 Internal Server Error:** Server-side error occurred.
