@@ -78,3 +78,45 @@ Logs in an existing user and returns an authentication token along with user det
 - **400 Bad Request:** Validation error; required fields are missing or invalid.
 - **401 Unauthorized:** Invalid email or password.
 - **500 Internal Server Error:** Server-side error occurred.
+
+## GET /profile
+
+### Description
+Retrieves the profile information of the authenticated user.
+
+### Authentication
+Requires a valid JWT token in the Authorization header or cookies.
+
+### Response Status Codes
+- **200 OK:** Successfully retrieved user profile.
+  - **Response Example:**
+    ```json
+    {
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com"
+    }
+    ```
+- **401 Unauthorized:** No token provided or invalid token.
+- **500 Internal Server Error:** Server-side error occurred.
+
+## GET /logout
+
+### Description
+Logs out the current user by invalidating their token.
+
+### Authentication
+Requires a valid JWT token in the Authorization header or cookies.
+
+### Response Status Codes
+- **200 OK:** Successfully logged out.
+  - **Response Example:**
+    ```json
+    {
+      "message": "logged Out"
+    }
+    ```
+- **401 Unauthorized:** No token provided or invalid token.
+- **500 Internal Server Error:** Server-side error occurred.
