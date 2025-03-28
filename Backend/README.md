@@ -120,3 +120,62 @@ Requires a valid JWT token in the Authorization header or cookies.
     ```
 - **401 Unauthorized:** No token provided or invalid token.
 - **500 Internal Server Error:** Server-side error occurred.
+
+# Captain API Documentation
+
+## POST /captains/register
+
+### Description
+Registers a new captain. This endpoint creates a captain account with vehicle details and returns an authentication token along with captain details.
+
+### Request Body
+- `fullname.firstname` (string, required): First name (min length 3 characters)
+- `fullname.lastname` (string, optional): Last name
+- `email` (string, required): Must be a valid email
+- `password` (string, required): Password (min length 6 characters)
+- `vehicle.color` (string, required): Vehicle color (min length 3 characters)
+- `vehicle.plate` (string, required): Vehicle plate number (min length 3 characters)
+- `vehicle.capacity` (number, required): Vehicle capacity (min value 1)
+- `vehicle.vehicleType` (string, required): Type of vehicle (must be one of: 'car', 'motorcycle', 'auto')
+
+**Example Request:**
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Smith"
+  },
+  "email": "john.smith@example.com",
+  "password": "secret123",
+  "vehicle": {
+    "color": "Black",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+### Response Status Codes
+- **201 Created:** Captain successfully registered.
+  - **Response Example:**
+    ```json
+    {
+      "token": "jwt_token_here",
+      "captain": {
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Smith"
+        },
+        "email": "john.smith@example.com",
+        "vehicle": {
+          "color": "Black",
+          "plate": "ABC123",
+          "capacity": 4,
+          "vehicleType": "car"
+        }
+      }
+    }
+    ```
+- **400 Bad Request:** Validation error; required fields are missing or invalid
+- **500 Internal Server Error:** Server-side error occurred
