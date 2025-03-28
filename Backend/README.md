@@ -179,3 +179,92 @@ Registers a new captain. This endpoint creates a captain account with vehicle de
     ```
 - **400 Bad Request:** Validation error; required fields are missing or invalid
 - **500 Internal Server Error:** Server-side error occurred
+
+## POST /captains/login
+
+### Description
+Authenticates a captain and returns an authentication token along with captain details.
+
+### Request Body
+- `email` (string, required): Must be a valid email
+- `password` (string, required): Password (min length 6 characters)
+
+**Example Request:**
+```json
+{
+  "email": "john.smith@example.com",
+  "password": "secret123"
+}
+```
+
+### Response Status Codes
+- **200 OK:** Successfully logged in
+  - **Response Example:**
+    ```json
+    {
+      "token": "jwt_token_here",
+      "captain": {
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Smith"
+        },
+        "email": "john.smith@example.com",
+        "vehicle": {
+          "color": "Black",
+          "plate": "ABC123",
+          "capacity": 4,
+          "vehicleType": "car"
+        }
+      }
+    }
+    ```
+- **400 Bad Request:** Validation error
+- **401 Unauthorized:** Invalid email or password
+
+## GET /captains/profile
+
+### Description
+Retrieves the profile information of the authenticated captain.
+
+### Authentication
+Requires a valid JWT token in the Authorization header or cookies.
+
+### Response Status Codes
+- **200 OK:** Successfully retrieved captain profile
+  - **Response Example:**
+    ```json
+    {
+      "captain": {
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Smith"
+        },
+        "email": "john.smith@example.com",
+        "vehicle": {
+          "color": "Black",
+          "plate": "ABC123",
+          "capacity": 4,
+          "vehicleType": "car"
+        }
+      }
+    }
+    ```
+- **401 Unauthorized:** No token provided or invalid token
+
+## GET /captains/logout
+
+### Description
+Logs out the current captain by invalidating their token.
+
+### Authentication
+Requires a valid JWT token in the Authorization header or cookies.
+
+### Response Status Codes
+- **200 OK:** Successfully logged out
+  - **Response Example:**
+    ```json
+    {
+      "message": "logout Successfully"
+    }
+    ```
+- **401 Unauthorized:** No token provided or invalid token
