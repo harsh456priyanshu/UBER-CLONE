@@ -11,7 +11,7 @@ const Captainlogin = () => {
     const { captain, setCaptain } = React.useContext(CaptainDataContext)
     const navigate = useNavigate()
 
-    const submitHandeler = async (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         const captain = {
             email: email,
@@ -20,8 +20,8 @@ const Captainlogin = () => {
 
         const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`, captain)
 
-        if(Response.status === 200) {
-            const data = Response.data
+        if(response.status === 200) {
+            const data = response.data
 
             setCaptain(data.captain)
             localStorage.setItem('token', data.token)
@@ -38,7 +38,7 @@ const Captainlogin = () => {
                 <img className='w-14 mb-10' src="../src/assets/uber-driver.svg" alt='Logo' />
 
                 <form onSubmit={(e) => {
-                    submitHandeler(e)
+                    submitHandler(e)
                 }}>
                     <h3 className='text-lg font-medium mb-2'>What's your email</h3>
                     <input

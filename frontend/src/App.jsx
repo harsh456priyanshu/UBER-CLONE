@@ -10,6 +10,7 @@ import UserProtectedWrapper from './Pages/UserProtectedWrapper'
 import UserLogout from './Pages/UserLogout'
 import CaptainHome from './Pages/CaptainHome'
 import CaptainProtectWrapper from './Pages/CaptainProtectWrapper'
+import CaptainLogout from './Pages/CaptainLogout'
 
 const App = () => {
 
