@@ -1,18 +1,33 @@
-import React , { useState } from 'react'
+import React , { useState  , useContext} from 'react'
 import { Link } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { UserDataContext } from '../context/UserContext'
 
 const UserLogin = () => {
     const [ email , setEmail] = useState('');
     const [ password , setPassword ] = useState('');
     const[userData , setUserData] = useState({})
 
-    const submitHandeler = (e) => {
+    const { user , setUser} = useContext(UserDataContext)
+    const navigate = useNavigate()
+
+    const submitHandler =  async (e) => {
         e.preventDefault();
-        setUserData({
-            email: email,
-            password: password
-        })
+       const userData = {
+        email: email,
+        password: password
+       }
+
+       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
+
+
+       if(response.status === 200) {
+        const data = response.data
+        setUser(data.user)
+        localStorage.setItem('token' , data.token)
+        navigate('/home')
+       }
         setEmail('')
         setPassword('')
     }
@@ -23,7 +38,7 @@ const UserLogin = () => {
                 <img className='w-16 mb-10' src="https://imgs.search.brave.com/FZq7YFqzVbkjhipVXmxfaZY-RmPwy3wsG0WV1UdM8bs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy13b3JsZC5uZXQv/d3AtY29udGVudC91/cGxvYWRzLzIwMjAv/MDUvVWJlci1Mb2dv/LTcwMHgzOTQucG5n" alt='Logo' />
 
                 <form onSubmit={(e) => {
-                    submitHandeler(e)
+                    submitHandler(e)
                 }}>
                     <h3 className='text-lg font-medium mb-2'>What's your email</h3>
                     <input

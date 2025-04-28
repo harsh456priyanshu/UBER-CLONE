@@ -7,11 +7,17 @@ const app = express();
 const cors = require('cors');
 const userRoutes = require('./routes/user.routes');
 const captainRoutes = require('./routes/captain.routes');
+const morgan = require('morgan');
 
 
 connectToDb();
 
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // Change to your frontend URL
+    credentials: true
+}));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(cookieParser());

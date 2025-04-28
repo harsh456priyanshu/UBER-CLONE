@@ -1,99 +1,123 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { UserDataContext } from '../context/UserContext'
+
+
 
 const UserSignup = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [userData , setUserData] = useState({});
+  const [ email, setEmail ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ firstName, setFirstName ] = useState('')
+  const [ lastName, setLastName ] = useState('')
+  const [ userData, setUserData ] = useState({})
 
-  const submitHandeler = (e) => {
-    e.preventDefault();
-    
-    setUserData({
-      fullName: {
-        firstName: firstName,
-        lastName: lastName
+  const navigate = useNavigate()
+
+
+
+  const { user, setUser } = useContext(UserDataContext);
+
+
+
+
+  const submitHandler = async (e) => {
+    e.preventDefault()
+    const newUser = {
+      fullname: {
+        firstname: firstName,
+        lastname: lastName
       },
       email: email,
       password: password
-    })
-    console.log(userData);
-    setEmail('')
-    setFirstName('')
-    setLastName('')
-    setPassword('')
+    }
+
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
+    
+
+    if (response.status === 201) {
+      const data = response.data
+      setUser(data.user)
+      navigate('/home')
+    }
+
+
+    setEmail('');
+    setFirstName('');
+    setLastName('');
+    setPassword('');
   }
-
-
   return (
-    <div className='p-7 h-screen flex flex-col justify-between'>
-      <div>
-        <img className='w-16 mb-10' src="https://imgs.search.brave.com/FZq7YFqzVbkjhipVXmxfaZY-RmPwy3wsG0WV1UdM8bs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy13b3JsZC5uZXQv/d3AtY29udGVudC91/cGxvYWRzLzIwMjAv/MDUvVWJlci1Mb2dv/LTcwMHgzOTQucG5n" alt='Logo' />
+    <div>
+      <div className='p-7 h-screen flex flex-col justify-between'>
+        <div>
+          <img className='w-16 mb-10' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s" alt="" />
 
-        <form onSubmit={(e) => {
-          submitHandeler(e)
-        }}>
+          <form onSubmit={(e) => {
+            submitHandler(e)
+          }}>
 
-          <h3 className='text-base font-medium mb-2'>What's your Name</h3>
-          <div className='flex gap-4 mb-5'>
+            <h3 className='text-lg w-1/2  font-medium mb-2'>What's your name</h3>
+            <div className='flex gap-4 mb-7'>
+              <input
+                required
+                className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border  text-lg placeholder:text-base'
+                type="text"
+                placeholder='First name'
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value)
+                }}
+              />
+              <input
+                required
+                className='bg-[#eeeeee] w-1/2  rounded-lg px-4 py-2 border  text-lg placeholder:text-base'
+                type="text"
+                placeholder='Last name'
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value)
+                }}
+              />
+            </div>
+
+            <h3 className='text-lg font-medium mb-2'>What's your email</h3>
             <input
               required
-              className='bg-[#eeeeee] rounded px-4  w-1/2 py-2 border   text-base placeholder:text-sm'
-              type='text'
-              placeholder='first Name'
-              value={firstName}
-              onChange={(e) => {
-                setFirstName(e.target.value)
-              }}
-            />
-            <input
-              required
-              className='bg-[#eeeeee] rounded px-4 w-1/2 py-2 border text-base placeholder:text-sm'
-              type='text'
-              placeholder='Last Name'
-              value={lastName}
-              onChange={(e) => {
-                setLastName(e.target.value)
-              }}
-            />
-          </div>
-          <h3 className='text-base font-medium mb-5'>What's your email</h3>
-          <input
-            required
-            className='bg-[#eeeeee] rounded px-4 mb-5 py-2 border w-full text-base placeholder:text-sm'
-            type='email'
-            placeholder='email@example.com'
-            value={email}
+              value={email}
               onChange={(e) => {
                 setEmail(e.target.value)
               }}
-          />
+              className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
+              type="email"
+              placeholder='email@example.com'
+            />
 
-          <h3 className='text-base font-medium mb-2'>Enter Password</h3>
+            <h3 className='text-lg font-medium mb-2'>Enter Password</h3>
 
-          <input
-            required
-            className='bg-[#eeeeee] rounded mb-5 px-4 py-2 border w-full text-base placeholder:text-sm'
-            type='password'
-            placeholder='password'
-            value={password}
+            <input
+              className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
+              value={password}
               onChange={(e) => {
                 setPassword(e.target.value)
               }}
-          />
+              required type="password"
+              placeholder='password'
+            />
 
-          <button className='bg-[#111] text-white font-semibold  mt-7 rounded px-4 py-2 w-full text-lg'>Login</button>
+            <button
+              className='bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base'
+            >Create account</button>
 
-
-          <p className='text-center'>Already have a Account <Link to='/login' className='text-blue-600'>Login Here</Link></p>
-        </form>
+          </form>
+          <p className='text-center'>Already have a account? <Link to='/login' className='text-blue-600'>Login here</Link></p>
+        </div>
+        <div>
+          <p className='text-[10px] leading-tight'>This site is protected by reCAPTCHA and the <span className='underline'>Google Privacy
+            Policy</span> and <span className='underline'>Terms of Service apply</span>.</p>
+        </div>
       </div>
-      <div>
-        <p className='text-[10px] leading-tight'>By proceeding , your consent to get call , whatsapp of SMS messages , including by automated means, from Uber and its affiliates to the number provided</p>
-      </div>
-    </div>
+    </div >
   )
 }
 

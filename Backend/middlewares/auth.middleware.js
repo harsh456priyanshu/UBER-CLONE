@@ -28,7 +28,7 @@ module.exports.authUser = async ( req, res , next) => {
         return next()
 
     } catch (err) {
-        return res.status(401).json({message : 'Unautorized'});
+        return res.status(401).json({message : 'Unauthorized'});
     }
 }
 
@@ -38,7 +38,7 @@ module.exports.authCaptain = async ( req, res , next) => {
     console.log(token);
 
     if(!token) {
-        return res.status(401).json({ message: 'Unauzorized'});
+        return res.status(401).json({ message: 'Unauthorized'});
     }
 
     const isBlackListed = await blackListTokenModel.findOne({ token: token});
@@ -56,6 +56,6 @@ module.exports.authCaptain = async ( req, res , next) => {
         return next()
 
     } catch (err) {
-        return res.status(401).json({message : 'Unautorized'});
+        return res.status(401).json({message : 'Unauthorized'});
     }
 }
