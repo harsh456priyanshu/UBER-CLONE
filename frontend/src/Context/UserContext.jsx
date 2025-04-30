@@ -1,35 +1,48 @@
-// import React, { createContext, useState } from "react";
+// import React, { createContext, useState } from 'react'
 
-// export const UserDataContext = createContext();
+// export const UserDataContext = createContext()
+
 
 // const UserContext = ({ children }) => {
-//     const [user, setUser] = useState({
-//         firstName: '',
-//         lastName: '',
-//         email: ''
-//     });
+
+//     const [ user, setUser ] = useState({
+//         email: '',
+//         fullName: {
+//             firstName: '',
+//             lastName: ''
+//         }
+//     })
 
 //     return (
-//         <UserDataContext.Provider value={{ user, setUser }}>
-//             {children}
-//         </UserDataContext.Provider>
-//     );
-// };
+//         <div>
+//             <UserDataContext.Provider value={{ user, setUser }}>
+//                 {children}
+//             </UserDataContext.Provider>
+//         </div>
+//     )
+// }
 
-// export default UserContext;
+// export default UserContext
 
 
-import { createContext, useState } from 'react';
+import React, { createContext, useState } from 'react'
 
-export const UserDataContext = createContext(null);
+export const UserDataContext = createContext()
 
-export const UserDataContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+const UserContext = ({ children }) => {
+    const [user, setUser] = useState({
+        email: '',
+        fullName: {
+            firstName: '',
+            lastName: ''
+        }
+    })
 
-  return (
-    <UserDataContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserDataContext.Provider>
-  );
-};
+    return (
+        <UserDataContext.Provider value={{ user, setUser }}>
+            {children}
+        </UserDataContext.Provider>
+    )
+}
 
+export default UserContext
