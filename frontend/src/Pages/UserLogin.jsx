@@ -2,12 +2,12 @@ import React , { useState  , useContext} from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { UserDataContext } from '../context/UserContext'
+import { UserDataContext } from '../Context/UserContext'
 
 const UserLogin = () => {
     const [ email , setEmail] = useState('');
     const [ password , setPassword ] = useState('');
-    const[userData , setUserData] = useState({})
+    const[ userData , setUserData] = useState({});
 
     const { user , setUser} = useContext(UserDataContext)
     const navigate = useNavigate()
