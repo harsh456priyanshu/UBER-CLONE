@@ -1,22 +1,19 @@
 import React from 'react'
 
-const WaitingForDriver = (props) => {
+const RidePopUp = (props) => {
   return (
     <div>
-       <div>
       <h5 className='p-1 text-center w-[93%] absolute top-0' onClick={() => {
-        props.waitingForDriver(false)
+        props.setRidePopupPanel(false)
       }}><i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i></h5>
-
-      <div className='flex items-center justify-between'>
-      <img className='h-12' src='https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg.webp' />
-      <div className='text-right'>
-        <h2 className='text-lg font-medium'>Raj Kumar</h2>
-        <h4 className='text-xl font-semibold -mt-1 -mb-1'>BR 01 FR 1762</h4>
-        <p className='text-sm text-gray-600'>Maruti Suzuki Alto</p>
+      <h3 className='text-2xl font-semibold mb-5'>New Ride Available !</h3>
+      <div className='flex item-center justify-between p-3 bg-yellow-400 rounded-lg mt-3'>
+        <div className='flex items-center gap-3'>
+          <img className='h-12 w-12 rounded-full object-cover' src="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png" alt="" />
+          <h2 className='text-xl font-medium'>Harsh Patel</h2>
+        </div>
+        <h5 className='text-lg font-semibold'>2.2 KM</h5>
       </div>
-      </div>
-
 
       <div className='flex gap-2 justify-between flex-col items-center'>
         <div className='w-full mt-5'>
@@ -42,10 +39,24 @@ const WaitingForDriver = (props) => {
             </div>
           </div>
         </div>
+
+        <div className='flex mt-5 w-full item-center justify-between'>
+        <button onClick={() => {
+            props.setRidePopupPanel(false)
+          }} className=' mt-1 bg-gray-300 text-gray-800 font-semibold p-3 px-8 rounded-lg'>Ignore</button>
+
+          <button onClick={() => {
+            props.setConfirmRidePopupPanel(true)
+          }} className=' bg-green-600 text-white font-semibold p-3 px-8 rounded-lg'>Accept
+          </button>
+
+
+         
+        </div>
       </div>
-    </div>
     </div>
   )
 }
 
-export default WaitingForDriver
+
+export default RidePopUp
