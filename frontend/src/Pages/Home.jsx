@@ -7,7 +7,7 @@ import LocationSearchPanel from '../components/LocationSearchPanel';
 import VehiclePanel from '../components/VehiclePanel';
 import ConfirmRide from '../components/ConfirmRide'
 import LookingForDriver from '../components/LookingForDriver'
-import waitingForDriver from '../components/WaitingForDriver'
+import WaitingForDriver from '../components/WaitingForDriver'
 
 
 const Home = () => {
@@ -114,7 +114,7 @@ useGSAP(function(){
       }} 
       className='h-screen w-screen'>
         {/* image for temporary use */}
-        <img className='h-full w-full object-cover'  src='https://miro.medium.com/max/1280/0*gwMx05pqII5hbfmX.gif' alt=''/>
+        <img className='h-full w-full object-cover'  src='https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif' alt=''/>
       </div>
       <div className='bg-white flex flex-col justify-end h-screen absolute top-0 w-full'>
         <div className='h-[30%] p-6 bg-white relative'>
@@ -173,7 +173,7 @@ useGSAP(function(){
 
       
       <div ref={waitingForDriverRef} className='fixed w-full z-10 bottom-0  px-3 py-6 pt-12 bg-white'>
-     < waitingForDriver waitingForDriver={waitingForDriver} />
+     < WaitingForDriver waitingForDriver={waitingForDriver} />
       </div> 
       
       
