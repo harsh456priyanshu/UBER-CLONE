@@ -268,3 +268,132 @@ Requires a valid JWT token in the Authorization header or cookies.
     }
     ```
 - **401 Unauthorized:** No token provided or invalid token
+
+# Ride API Documentation
+
+## POST /rides/create
+
+### Description
+Creates a new ride booking for the authenticated user. The fare is calculated based on the provided pickup and destination addresses.
+
+### Request Body
+- `pickup` (string, required): Pickup address (min length 3 characters)
+- `destination` (string, required): Drop-off address (min length 3 characters)
+- `vehicleType` (string, required): Must be one of 'auto', 'car', or 'moto'
+
+**Example Request:**
+```json
+{
+  "pickup": "123 Main St",
+  "destination": "456 Elm St",
+  "vehicleType": "car"
+}
+```
+
+### Response Status Codes
+- **201 Created:** Ride successfully created.
+  - **Response Example:**
+    ```json
+    {
+      "_id": "ride_id",
+      "user": "user_id",
+      "pickup": "123 Main St",
+      "destination": "456 Elm St",
+      "otp": "123456",
+      "fare": 65,
+      "status": "pending"
+      // ... other ride details ...
+    }
+    ```
+- **400 Bad Request:** Validation error for missing or invalid fields.
+- **500 Internal Server Error:** Server-side error occurred.
+
+## GET /rides/get-fare
+
+### Description
+Calculates the fare for a ride based on the provided pickup and destination addresses.
+
+### Query Parameters
+- `pickup` (string, required): Pickup address (min length 3 characters).
+- `destination` (string, required): Drop-off address (min length 3 characters).
+
+### Authentication
+Requires a valid JWT token in the Authorization header.
+
+### Response Status Codes
+- **200 OK:** Fare successfully calculated.
+  - **Response Example:**
+    ```json
+    {
+      "pickup": "123 Main St",
+      "destination": "456 Elm St",
+      "fare": 65,
+      "distance": { "text": "5 km", "value": 5000 },
+      "duration": { "text": "15 mins", "value": 900 }
+    }
+    ```
+- **400 Bad Request:** Validation error for missing or invalid fields.
+- **500 Internal Server Error:** Server-side error occurred.
+
+# Maps API Documentation
+
+## GET /maps/get-coordinates
+
+### Description
+Retrieves geographic coordinates for a given address.
+
+### Query Parameters
+- `address` (string, required): Address to get coordinates (min length 3 characters)
+
+### Response Status Codes
+- **200 OK:** Coordinates successfully retrieved.
+  - **Response Example:**
+    ```json
+    {
+      "ltd": 12.34567,
+      "lng": 76.54321
+    }
+    ```
+- **400 Bad Request:** Validation error.
+- **404 Not Found:** Coordinates not found.
+
+## GET /maps/get-distance-time
+
+### Description
+Retrieves distance and duration information between two locations.
+
+### Query Parameters
+- `origin` (string, required): The origin address (min length 3 characters)
+- `destination` (string, required): The destination address (min length 3 characters)
+
+### Response Status Codes
+- **200 OK:** Distance and duration successfully retrieved.
+  - **Response Example:**
+    ```json
+    {
+      "distance": { "text": "5 km", "value": 5000 },
+      "duration": { "text": "15 mins", "value": 900 }
+    }
+    ```
+- **400 Bad Request:** Validation error.
+- **500 Internal Server Error:** Server error occurred.
+
+## GET /maps/get-suggestions
+
+### Description
+Retrieves autocomplete suggestions for a given input text using the Google Maps API.
+
+### Query Parameters
+- `input` (string, required): Search input text (min length 3 characters)
+
+### Response Status Codes
+- **200 OK:** Suggestions retrieved.
+  - **Response Example:**
+    ```json
+    [
+      { "description": "Location 1", ... },
+      { "description": "Location 2", ... }
+    ]
+    ```
+- **400 Bad Request:** Validation error.
+- **500 Internal Server Error:** Server error occurred.
